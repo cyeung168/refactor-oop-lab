@@ -77,10 +77,6 @@ get '/squads/:squad_id/students/new' do
 end
 
 get '/squads/:squad_id/students/:student_id' do
-  # squad_id = params[:squad_id].to_i
-  # id = params[:student_id].to_i
-  # student = @conn.exec('SELECT * FROM students WHERE id = $1 AND squad_id = $2', [ id, squad_id ] )
-  # @student = student[0]
   @student = Student.find params[:student_id].to_i
   erb :'students/show'
 end
@@ -96,7 +92,7 @@ post '/squads/:squad_id/students' do
 end
 
 put '/squads/:squad_id/students/:student_id' do
-  st = Student.find(params[:student_id].to_i, params[:squad_id].to_i)
+  st = Student.find(params[:squad_id].to_i, params[:student_id].to_i)
   st.name = params[:name]
   st.age = params[:age]
   st.spirit_animal = params[:spirit_animal]
@@ -105,6 +101,6 @@ put '/squads/:squad_id/students/:student_id' do
 end
 
 delete '/squads/:squad_id/students/:student_id' do
-  @student = Student.find(params[:student_id].to_i,params[:squad_id].to_i).destroy
-  redirect "/squads/#{params[:squad_id].to_i}"
+  @student = Student.find(params[:squad_id].to_i,params[:student_id].to_i).destroy
+  redirect "/squads/#{@squad_id}"
 end
